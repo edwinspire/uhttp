@@ -1,0 +1,3 @@
+#!/bin/bash
+valac  -d "/home/edwinspire/programacion/ProyectosSoftware/Software Vala/ProyectosVala/proyects/uHTTP/bin/lnx"  "/home/edwinspire/programacion/ProyectosSoftware/Software Vala/ProyectosVala/proyects/uHTTP/uhttp_main.vala"  --pkg gee-1.0  --pkg gio-2.0  -X "-L/home/edwinspire/programacion/ProyectosSoftware/Software Vala/ProyectosVala/proyectlibs/lnx"  -X "-I/home/edwinspire/programacion/ProyectosSoftware/Software Vala/ProyectosVala/proyectlibs/lnx"  "/home/edwinspire/programacion/ProyectosSoftware/Software Vala/ProyectosVala/proyectlibs/lnx/libspire_uhttp.vapi" -X -lspire_uhttp  -o uHTTP  --thread   
+read
