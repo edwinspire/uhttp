@@ -29,7 +29,7 @@ using edwinspire.uHttp;
 public class RunuSMS: GLib.Object {
 
 	public static int main (string[] args) {
-		stdout.printf ("run usmsd!\n");
+		stdout.printf ("run uHTTP!\n");
 
 uHttpServer uServer = new uHttpServer();
 //smsServer.ResetAndLoadDevices();
