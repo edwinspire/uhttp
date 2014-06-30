@@ -20,35 +20,50 @@
 //
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-
 using GLib;
 using edwinspire.uHttp;
-
+using edwinspire.wHTML;
 //using Gee;
-
 //using edwinspire.UiWeb.Server;
 //using Xml;
-
 public class RunuSMS: GLib.Object {
-
 	public static int main (string[] args) {
 		stdout.printf ("run uHTTP!\n");
-
-uHttpServer uServer = new uHttpServer();
-//smsServer.ResetAndLoadDevices();
-uServer.run();
-
-print("El servidor muere...");
+		Servidor uServer = new Servidor();
+		//smsServer.ResetAndLoadDevices();
+		uServer.run();
+		print("El servidor muere...");
 		return 0;
 	}
-
-
-
-
+	public class Servidor:uHttpServer {
+		public override bool connection_handler_virtual(Request request, DataOutputStream dos) {
+			edwinspire.uHttp.Response response = new edwinspire.uHttp.Response();
+			response.Status = StatusCode.OK;
+			response.Data =  "nada".data;
+			//warning("*********** OJO *************\n");
+			//warning(request.Path);
+			switch(request.Path) {
+				case  "/test.html":
+				response = response_whtml(request);
+				this.serve_response( response, dos );
+				break;
+				default:
+				      response.Status = StatusCode.NOT_FOUND;
+				response.Data = edwinspire.uHttp.Response.HtmErrorPage("uHTTP WebServer", "404 - Página no encontrada").data;
+				response.Header["Content-Type"] = "text/html";
+				break;
+			}
+			return false;
+		}
+		private edwinspire.uHttp.Response response_whtml(Request request) {
+			edwinspire.uHttp.Response Retorno = new edwinspire.uHttp.Response();
+			Retorno.Header["Content-Type"] = "text/html";
+			Retorno.Status = StatusCode.OK;
+			//warning("*********** ENTRA *************\n");
+			var s = this.ReadServerFile("test.whtml");
+			Widget w = new Widget();
+			Retorno.Data = w.create(s).data;
+			return Retorno;
+		}
+	}
 }
-
-
-
-
-
