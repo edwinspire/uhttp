@@ -2,5 +2,5 @@
 
 export LD_LIBRARY_PATH=.
 
-export LD_LIBRARY_PATH="/home/consola/Documentos/farmaenlace/Operadores/Edwin/Desarrollo/ProyectosSoftware/proyectlibs/lnx"
-./uHTTP
+export LD_LIBRARY_PATH="/home/edwinspire/Documentos/DesarrolloSoftware/ProyectosSoftware_ng/proyectlibs/lnx"
+./uhttp

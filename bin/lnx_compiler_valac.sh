@@ -1,3 +1,8 @@
 #!/bin/bash
-valac  -d "/home/consola/Documentos/farmaenlace/Operadores/Edwin/Desarrollo/ProyectosSoftware/proyects/uHTTP/bin/lnx"  "/home/consola/Documentos/farmaenlace/Operadores/Edwin/Desarrollo/ProyectosSoftware/proyects/uHTTP/uhttp_main.vala"  --pkg gee-1.0  --pkg gio-2.0  -X "-L/home/consola/Documentos/farmaenlace/Operadores/Edwin/Desarrollo/ProyectosSoftware/proyectlibs/lnx"  -X "-I/home/consola/Documentos/farmaenlace/Operadores/Edwin/Desarrollo/ProyectosSoftware/proyectlibs/lnx"  "/home/consola/Documentos/farmaenlace/Operadores/Edwin/Desarrollo/ProyectosSoftware/proyectlibs/lnx/libspire_uhttp.vapi" -X -lspire_uhttp  "/home/consola/Documentos/farmaenlace/Operadores/Edwin/Desarrollo/ProyectosSoftware/proyectlibs/lnx/libspire_whtml.vapi" -X -lspire_whtml  -o uHTTP  --thread   
+valac  -d "/home/edwinspire/Documentos/DesarrolloSoftware/ProyectosSoftware_ng/proyects/uhttp/bin/lnx"  "/home/edwinspire/Documentos/DesarrolloSoftware/ProyectosSoftware_ng/proyects/uhttp/uhttp_main.vala"  --pkg gee-1.0  --pkg gio-2.0  -X "-L/home/edwinspire/Documentos/DesarrolloSoftware/ProyectosSoftware_ng/proyectlibs/lnx"  -X "-I/home/edwinspire/Documentos/DesarrolloSoftware/ProyectosSoftware_ng/proyectlibs/lnx"  "/home/edwinspire/Documentos/DesarrolloSoftware/ProyectosSoftware_ng/proyectlibs/lnx/libspire_uhttp.vapi" -X -lspire_uhttp  -o uhttp  --thread   
+
+
+echo "Generando documentacion"
+valadoc  --vapidir="/home/edwinspire/Documentos/DesarrolloSoftware/ProyectosSoftware_ng/vapi_intern/"  --vapidir="/home/edwinspire/Documentos/DesarrolloSoftware/ProyectosSoftware_ng/proyectlibs/lnx"  "/home/edwinspire/Documentos/DesarrolloSoftware/ProyectosSoftware_ng/proyects/uhttp/uhttp_main.vala"  --pkg gee-1.0  --pkg gio-2.0  --pkg libspire_uhttp  --basedir="/" --force -o "/home/edwinspire/Documentos/DesarrolloSoftware/ProyectosSoftware_ng/proyects/uhttp/documentation/uhttp"
+
 read

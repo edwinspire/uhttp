@@ -8,7 +8,7 @@
 //
 //  Quito - Ecuador
 //
-//  This program is free software: you can redistribute it and/or modify
+//  This program is free software: you can redistri//bute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
 //  (at your option) any later version.
@@ -22,20 +22,17 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using GLib;
 using edwinspire.uHttp;
-using edwinspire.wHTML;
-//using Gee;
-//using edwinspire.UiWeb.Server;
-//using Xml;
+
 public class RunuSMS: GLib.Object {
 	public static int main (string[] args) {
 		stdout.printf ("run uHTTP!\n");
-		Servidor uServer = new Servidor();
+		uHttpServer uServer = new uHttpServer();
 		//smsServer.ResetAndLoadDevices();
 		uServer.run();
 		print("El servidor muere...");
 		return 0;
 	}
-	public class Servidor:uHttpServer {
+	/*public class Servidor:uHttpServer {
 		public override bool connection_handler_virtual(Request request, DataOutputStream dos) {
 			edwinspire.uHttp.Response response = new edwinspire.uHttp.Response();
 			response.Status = StatusCode.OK;
@@ -61,9 +58,9 @@ public class RunuSMS: GLib.Object {
 			Retorno.Status = StatusCode.OK;
 			//warning("*********** ENTRA *************\n");
 			var s = this.ReadServerFile("test.whtml");
-			Widget w = new Widget();
-			Retorno.Data = w.create(s).data;
+			//Widget w = new Widget();
+			//Retorno.Data = w.create(s).data;
 			return Retorno;
 		}
-	}
+	}*/
 }
