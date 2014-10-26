@@ -22,45 +22,95 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using GLib;
 using edwinspire.uHttp;
+using edwinspire.utils;
 
-public class RunuSMS: GLib.Object {
+
+	/**
+	* MultiServer run several micro HTTP servers running on different ports each.
+	*/
+	public class MultiServer: GLib.Object {
+
 	public static int main (string[] args) {
-		stdout.printf ("run uHTTP!\n");
-		uHttpServer uServer = new uHttpServer();
-		//smsServer.ResetAndLoadDevices();
-		uServer.run();
-		print("El servidor muere...");
+		stdout.printf ("run uHTTP MultiServer!\n");
+		MainLoop ml = new MainLoop();
+		uHTTPMultiServer Server = new uHTTPMultiServer();
+		Server.run();
+		ml.run();
 		return 0;
-	}
-	/*public class Servidor:uHttpServer {
-		public override bool connection_handler_virtual(Request request, DataOutputStream dos) {
-			edwinspire.uHttp.Response response = new edwinspire.uHttp.Response();
-			response.Status = StatusCode.OK;
-			response.Data =  "nada".data;
-			//warning("*********** OJO *************\n");
-			//warning(request.Path);
-			switch(request.Path) {
-				case  "/test.html":
-				response = response_whtml(request);
-				this.serve_response( response, dos );
-				break;
-				default:
-				      response.Status = StatusCode.NOT_FOUND;
-				response.Data = edwinspire.uHttp.Response.HtmErrorPage("uHTTP WebServer", "404 - Página no encontrada").data;
-				response.Header["Content-Type"] = "text/html";
-				break;
-			}
-			return false;
-		}
-		private edwinspire.uHttp.Response response_whtml(Request request) {
-			edwinspire.uHttp.Response Retorno = new edwinspire.uHttp.Response();
-			Retorno.Header["Content-Type"] = "text/html";
-			Retorno.Status = StatusCode.OK;
-			//warning("*********** ENTRA *************\n");
-			var s = this.ReadServerFile("test.whtml");
-			//Widget w = new Widget();
-			//Retorno.Data = w.create(s).data;
-			return Retorno;
-		}
-	}*/
+	}	
+	
 }
+
+	/**
+	* uHTTPMultiServer represents several micro HTTP servers running on different ports each.
+	*/
+	public class uHTTPMultiServer:GLib.Object{
+	
+		public FilesLinesArray ConfigFiles = new FilesLinesArray();
+		private string AlreadyLine = "";
+		public bool kill = false;
+	
+	/**
+	* Constructor 
+	* Read the configuration file from uhttpms.conf
+	*/
+	public uHTTPMultiServer(){
+		ConfigFiles.file_name = "uhttpms.conf";
+		ConfigFiles.load();
+	}
+	
+	private void thread_servers() {
+			if (!Thread.supported()) {
+				stderr.printf("Cannot run without threads.\n");
+			} else {
+					int i = 0;
+				foreach(var configfile in ConfigFiles.Lines){
+					
+					print("Loading the server\n");
+					while(i<10){
+						Thread.usleep(100000*1);
+						print(".");
+						i++;
+					}
+					print(".\n");					
+					
+					this.AlreadyLine = configfile;
+				
+				try {
+					Thread.create<void>(this.single_server, false);
+				}
+				catch(ThreadError e) {
+					print(e.message);
+				}
+					i = 0;
+				}
+				
+			}
+	}
+	
+	private void single_server() {
+	 	uHttpServer uServer = new uHttpServer();
+	 	uServer.Config.file_name = this.AlreadyLine;
+	 	//print("Tomando configuración de %s\n", uServer.Config.file_name);
+		uServer.run_without_mainloop();
+		while(!kill){
+			Thread.usleep(1000000*30);
+		}
+		print("El servidor en %s muere...\n", uServer.Config.file_name);		
+	}
+	
+	/**
+	* Run server
+	*/
+	public void run(){
+		this.thread_servers();
+		print("Multi Servidor iniciando\n");	
+	}	
+	
+	
+	
+	
+	}
+
+
+
