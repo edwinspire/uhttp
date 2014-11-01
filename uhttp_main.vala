@@ -63,16 +63,18 @@ using edwinspire.utils;
 			if (!Thread.supported()) {
 				stderr.printf("Cannot run without threads.\n");
 			} else {
+					var Cadena = new StringBuilder();
 					int i = 0;
 				foreach(var configfile in ConfigFiles.Lines){
-					
-					print("Loading the server ");
+					Cadena.truncate();
+					Cadena.append("Load config server");
+					//print("Loading the server");
 					while(i<10){
 						Thread.usleep(100000*1);
-						print(".");
+						Cadena.append(".");
+						print("%s\n", Cadena.str);
 						i++;
 					}
-					print(".\n");					
 					
 					this.AlreadyLine = configfile;
 				
@@ -88,15 +90,13 @@ using edwinspire.utils;
 			}
 	}
 	
-	private void single_server() {
+	private void single_server() {	
 	 	uHttpServer uServer = new uHttpServer();
 	 	uServer.Config.file_name = this.AlreadyLine;
-	 	//print("Tomando configuración de %s\n", uServer.Config.file_name);
 		uServer.run_without_mainloop();
 		while(!kill){
 			Thread.usleep(1000000*30);
-		}
-		print("El servidor en %s muere...\n", uServer.Config.file_name);		
+		}		
 	}
 	
 	/**
@@ -104,7 +104,6 @@ using edwinspire.utils;
 	*/
 	public void run(){
 		this.thread_servers();
-		print("Multi Servidor iniciando\n");	
 	}	
 	
 	
